@@ -1,0 +1,381 @@
+fileFormatVersion: 2
+guid: 15c448542501dc9459e4dd73189b88bf
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      74: -251351218608039746
+    second: Armature|attack
+  - first:
+      74: -3281714845378286312
+    second: Armature|dead
+  - first:
+      74: 9123675476771670050
+    second: Armature|fly
+  - first:
+      74: 1323920681783110427
+    second: Armature|hurt
+  - first:
+      74: -4799524434163024911
+    second: Armature|walk
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: e558971dfe085da46992eaf313058e10, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: Armature/Bone
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|attack
+      takeName: Armature|attack
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 17
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|dead
+      takeName: Armature|dead
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 21
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|fly
+      takeName: Armature|fly
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|hurt
+      takeName: Armature|hurt
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 0
+      - path: Armature/Bone
+        weight: 0
+      - path: Armature/Bone/Bone.001
+        weight: 0
+      - path: Armature/Bone/Bone.001/Bone.002
+        weight: 1
+      - path: Armature/Bone/Bone.001/Bone.002/Bone.003
+        weight: 1
+      - path: Armature/Bone/Bone.001/Bone.002/Bone.003/Bone.004
+        weight: 1
+      - path: Armature/Bone/Bone.001/Bone.002/Bone.003/Bone.004/Bone.004_end
+        weight: 1
+      - path: Armature/Bone/ear1.L
+        weight: 0
+      - path: Armature/Bone/ear1.L/ear2.L
+        weight: 1
+      - path: Armature/Bone/ear1.L/ear2.L/ear3.L
+        weight: 1
+      - path: Armature/Bone/ear1.L/ear2.L/ear3.L/ear3.L_end
+        weight: 1
+      - path: Armature/Bone/ear1.R
+        weight: 0
+      - path: Armature/Bone/ear1.R/ear2.R
+        weight: 1
+      - path: Armature/Bone/ear1.R/ear2.R/ear3.R
+        weight: 1
+      - path: Armature/Bone/ear1.R/ear2.R/ear3.R/ear3.R_end
+        weight: 1
+      - path: Cube
+        weight: 0
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|walk
+      takeName: Armature|walk
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: maomaoFly(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Cube
+      parentName: maomaoFly(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Armature
+      parentName: maomaoFly(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Bone
+      parentName: Armature
+      position: {x: 3.7461195e-19, y: -0.0026763976, z: -0.0016871023}
+      rotation: {x: 0.81571376, y: 0.00000641303, z: 0.000009043384, w: 0.57845575}
+      scale: {x: 1, y: 1.0000001, z: 1.0000004}
+    - name: Bone.001
+      parentName: Bone
+      position: {x: 3.4109797e-15, y: 0.0038001721, z: -2.2351741e-10}
+      rotation: {x: -0.9057664, y: -1.3642422e-12, z: -0.000020083504, w: 0.4237773}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: Bone.002
+      parentName: Bone.001
+      position: {x: -2.2041153e-15, y: 0.0019130688, z: 3.7252902e-11}
+      rotation: {x: 0.6833494, y: 2.1219272e-12, z: 0.000015151863, w: 0.7300916}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: Bone.003
+      parentName: Bone.002
+      position: {x: 4.5473095e-15, y: 0.0030727475, z: -7.566996e-12}
+      rotation: {x: 0.017782014, y: 1.8390172e-12, z: 0.00000039427823, w: 0.9998419}
+      scale: {x: 1, y: 1.0000001, z: 0.99999994}
+    - name: Bone.004
+      parentName: Bone.003
+      position: {x: 4.2105423e-16, y: 0.0023227525, z: 5.5879353e-11}
+      rotation: {x: -0.0671993, y: 2.7241594e-12, z: -0.000001490004, w: 0.99773955}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bone.004_end
+      parentName: Bone.004
+      position: {x: -0, y: 0.0020508487, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ear1.L
+      parentName: Bone
+      position: {x: -0.0018288991, y: 0.003933931, z: -0.0024903868}
+      rotation: {x: -0.2312288, y: 0.087530926, z: 0.60505444, w: 0.7568228}
+      scale: {x: 1.0000001, y: 0.99999994, z: 0.99999976}
+    - name: ear2.L
+      parentName: ear1.L
+      position: {x: -5.5879353e-11, y: 0.0008037474, z: -2.2351741e-10}
+      rotation: {x: 0.04399938, y: 0.004938531, z: 0.11023397, w: 0.99291897}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1.0000002}
+    - name: ear3.L
+      parentName: ear2.L
+      position: {x: -9.313225e-11, y: 0.0020377033, z: 3.7252902e-11}
+      rotation: {x: -0.0024855512, y: 0.0019178657, z: 0.0034850442, w: 0.99998903}
+      scale: {x: 0.9999998, y: 1, z: 1}
+    - name: ear3.L_end
+      parentName: ear3.L
+      position: {x: -0, y: 0.0030778358, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ear1.R
+      parentName: Bone
+      position: {x: 0.0018290097, y: 0.003933931, z: -0.0024903056}
+      rotation: {x: -0.2312154, y: -0.08754757, z: -0.60505956, w: 0.75682086}
+      scale: {x: 1.0000001, y: 0.9999999, z: 0.99999976}
+    - name: ear2.R
+      parentName: ear1.R
+      position: {x: 2.4214386e-10, y: 0.00080374687, z: 0}
+      rotation: {x: 0.04399931, y: -0.0049384492, z: -0.11023391, w: 0.992919}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1.0000004}
+    - name: ear3.R
+      parentName: ear2.R
+      position: {x: 5.5879353e-11, y: 0.0020377033, z: 2.4214386e-10}
+      rotation: {x: -0.0024854431, y: -0.001918017, z: -0.0034850785, w: 0.99998903}
+      scale: {x: 0.99999964, y: 0.9999997, z: 0.9999998}
+    - name: ear3.R_end
+      parentName: ear3.R
+      position: {x: -0, y: 0.0030778358, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - GM
+  - DragItem
+  - BreakWall
+  - Wall
+  - trigger
+  - Ground
+  - BigMaoMao
+  - Monster
+  - Player2
+  - PM2
+  - Door2
+  - RM
+  - DrawPlace
+  - CS
+  - ArtistQs
+  - PM
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - PostProcessing
+  - bullet
+  - Artist
+  - Programmer
+  - Player2
+  - DragObject
+  - Wall
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
