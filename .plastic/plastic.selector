@@ -1,4 +1,0 @@
-repository "GameProducer2@GameProducer@cloud"
-  path "/"
-    br "/main"
-    co "/main"
