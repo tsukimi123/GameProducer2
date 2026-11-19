@@ -10,7 +10,7 @@ public class MoveAndJump : MonoBehaviourPun
     public float one, two;
     void Update()
     {
-        plane.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        plane.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         if (plane.transform.localPosition.x < one)
         {
             plane.transform.localPosition = new Vector3(one * 0.99f, 0, 0);

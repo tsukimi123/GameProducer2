@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Cinemachine;
+
 
 public class CameraIsMine : MonoBehaviour
 {
@@ -18,7 +18,10 @@ public class CameraIsMine : MonoBehaviour
         if (!PV.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
-            Destroy(GetComponentInChildren<CinemachineVirtualCamera>().gameObject);
+            // 用共同基底類別：Cinemachine Upgrader 轉換前（CinemachineVirtualCamera）和轉換後（CinemachineCamera）都找得到
+            var vcam = GetComponentInChildren<Unity.Cinemachine.CinemachineVirtualCameraBase>();
+            if (vcam != null)
+                Destroy(vcam.gameObject);
         }
     }
 

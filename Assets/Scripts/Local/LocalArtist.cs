@@ -95,9 +95,9 @@ public class LocalArtist : MonoBehaviour
                 Attack();
             }
             //掉落速度
-            if (playerRigidbody.velocity.y < 0)
+            if (playerRigidbody.linearVelocity.y < 0)
             {
-                playerRigidbody.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+                playerRigidbody.linearVelocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
             }
 
             //Rotate
@@ -106,7 +106,7 @@ public class LocalArtist : MonoBehaviour
             {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(0, transform.localPosition.y, transform.localPosition.z), 1f);
             }
-            playerRigidbody.velocity = new Vector3(horizontalInput * moveSpeed, playerRigidbody.velocity.y, 0);
+            playerRigidbody.linearVelocity = new Vector3(horizontalInput * moveSpeed, playerRigidbody.linearVelocity.y, 0);
             if (horizontalInput > 0) { faceLeft = 1f; } else if (horizontalInput < 0) { faceLeft = -1f; }
             Vector3 movementDirection = new Vector3(horizontalInput * moveSpeed, 0, 0);
             if (movementDirection != Vector3.zero)
@@ -169,24 +169,24 @@ public class LocalArtist : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump") && extraJump > 0 && isGrounded == true) //Jump from the ground
         {
-            playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, 0, playerRigidbody.velocity.z);
-            playerRigidbody.velocity += Vector3.up * jumpForce;
+            playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0, playerRigidbody.linearVelocity.z);
+            playerRigidbody.linearVelocity += Vector3.up * jumpForce;
             extraJump--;
             PS.SetActive(true);
             PlayerAni.SetTrigger("Jump");
         }
         else if (Input.GetButtonDown("Jump") && extraJump > 0) //double Jump OR Air Jump
         {
-            playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, 0, playerRigidbody.velocity.z);
-            playerRigidbody.velocity += Vector3.up * jumpForce;
+            playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0, playerRigidbody.linearVelocity.z);
+            playerRigidbody.linearVelocity += Vector3.up * jumpForce;
             extraJump--;
             PS.SetActive(true);
             PlayerAni.SetTrigger("DJump");
         }
         else if (Input.GetButtonDown("Jump") && extraJump == 0 && isOnWall == true) //WallJump
         {
-            playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, 0, playerRigidbody.velocity.z);
-            playerRigidbody.velocity += Vector3.up * jumpForce;
+            playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0, playerRigidbody.linearVelocity.z);
+            playerRigidbody.linearVelocity += Vector3.up * jumpForce;
             extraJump--;
             PS.SetActive(true);
             PlayerAni.SetTrigger("Jump");
@@ -194,8 +194,8 @@ public class LocalArtist : MonoBehaviour
         }
         else if (Input.GetButtonDown("Jump") && extraJump == 0 && isGrounded == true) //確保跳躍時一定能跳起來 (正常狀況下不會執行)
         {
-            playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, 0, playerRigidbody.velocity.z);
-            playerRigidbody.velocity += Vector3.up * jumpForce;
+            playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0, playerRigidbody.linearVelocity.z);
+            playerRigidbody.linearVelocity += Vector3.up * jumpForce;
             PS.SetActive(true);
             PlayerAni.SetTrigger("Jump");
         }

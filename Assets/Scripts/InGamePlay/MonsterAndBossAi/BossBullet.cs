@@ -13,7 +13,7 @@ public class BossBullet : MonoBehaviourPun
     public GameObject effect;
     void Start()
     {
-        rb.velocity = transform.forward * speed;
+        rb.linearVelocity = transform.forward * speed;
         StartCoroutine(destroyBullet());
         Ground = false;
     }

@@ -13,7 +13,7 @@ public class DeadCube : MonoBehaviourPun
             artWall.needDestory = false;
             other.GetComponent<ChangeOwner>().gravity = false;
             other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         }
     }
     private void OnTriggerExit(Collider other)

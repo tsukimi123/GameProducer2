@@ -10,7 +10,7 @@ public class AddScale : MonoBehaviourPun
     public GameObject HitEffect;
     void Start()
     {
-        rb.velocity = transform.forward * speed;
+        rb.linearVelocity = transform.forward * speed;
         StartCoroutine(DestroyBullet());
     }
     public void OnTriggerEnter(Collider hitInfo)

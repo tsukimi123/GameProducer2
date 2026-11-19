@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviourPun
     }
     void Start()
     {
-        rb.velocity = transform.forward * speed;
+        rb.linearVelocity = transform.forward * speed;
         //ShootAudio.Play();
         StartCoroutine(DestroyBullet());
     }

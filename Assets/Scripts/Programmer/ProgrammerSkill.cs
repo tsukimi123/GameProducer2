@@ -194,7 +194,7 @@ public class ProgrammerSkill : MonoBehaviourPun
                 return;
             if (UseThrow == true)
             {
-                HitObject.GetComponent<Rigidbody>().velocity += throwV3 * throwFroce;
+                HitObject.GetComponent<Rigidbody>().linearVelocity += throwV3 * throwFroce;
             }
             PhotonNetwork.Destroy(EffectObject);
             EffectObject = null;

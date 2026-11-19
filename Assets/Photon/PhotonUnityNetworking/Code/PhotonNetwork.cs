@@ -64,7 +64,7 @@ namespace Photon.Pun
     public static partial class PhotonNetwork
     {
         /// <summary>Version number of PUN. Used in the AppVersion, which separates your playerbase in matchmaking.</summary>
-        public const string PunVersion = "2.40";
+        public const string PunVersion = "2.56";
 
         /// <summary>Version number of your game. Setting this updates the AppVersion, which separates your playerbase in matchmaking.</summary>
         /// <remarks>
@@ -462,8 +462,7 @@ namespace Photon.Pun
 
                 if (offlineMode)
                 {
-                    NetworkingClient.ChangeLocalID(-1);
-                    //SendMonoMessage(PhotonNetworkingMessage.OnConnectedToMaster);
+                    NetworkingClient.ChangeLocalID(-1, true);
                     NetworkingClient.ConnectionCallbackTargets.OnConnectedToMaster();
                 }
                 else
@@ -1030,10 +1029,7 @@ namespace Photon.Pun
             #else
 
                 #if UNITY_2019_4_OR_NEWER
-                if (NetworkingClient == null)
-                {
-                    NetworkingClient = new LoadBalancingClient();
-                }
+                // modern unity editor versions use RuntimeInitializeOnLoadMethod, so this constructor does not need to do anything
                 #else
                 StaticReset();  // in OLDER unity editor versions there is no RuntimeInitializeOnLoadMethod, so call reset
                 #endif
@@ -1150,18 +1146,9 @@ namespace Photon.Pun
 
             SetupLogging();
 
-
-            NetworkingClient.LoadBalancingPeer.TransportProtocol = appSettings.Protocol;
-            NetworkingClient.ExpectedProtocol = null;
-            NetworkingClient.EnableProtocolFallback = appSettings.EnableProtocolFallback;
-            NetworkingClient.AuthMode = appSettings.AuthMode;
-
-
             IsMessageQueueRunning = true;
             NetworkingClient.AppId = appSettings.AppIdRealtime;
             GameVersion = appSettings.AppVersion;
-
-
 
             if (startInOfflineMode)
             {
@@ -1177,37 +1164,7 @@ namespace Photon.Pun
             }
 
 
-            NetworkingClient.EnableLobbyStatistics = appSettings.EnableLobbyStatistics;
-            NetworkingClient.ProxyServerAddress = appSettings.ProxyServer;
-
-
-            if (appSettings.IsMasterServerAddress)
-            {
-                if (AuthValues == null)
-                {
-                    AuthValues = new AuthenticationValues(Guid.NewGuid().ToString());
-                }
-                else if (string.IsNullOrEmpty(AuthValues.UserId))
-                {
-                    AuthValues.UserId = Guid.NewGuid().ToString();
-                }
-                return ConnectToMaster(appSettings.Server, appSettings.Port, appSettings.AppIdRealtime);
-            }
-
-
-            NetworkingClient.NameServerPortInAppSettings = appSettings.Port;
-            if (!appSettings.IsDefaultNameServer)
-            {
-                NetworkingClient.NameServerHost = appSettings.Server;
-            }
-
-
-            if (appSettings.IsBestRegion)
-            {
-                return ConnectToBestCloudServer();
-            }
-
-            return ConnectToRegion(appSettings.FixedRegion);
+            return NetworkingClient.ConnectUsingSettings(appSettings);
         }
 
 
@@ -1228,6 +1185,7 @@ namespace Photon.Pun
         /// <param name="masterServerAddress">The server's address (either your own or Photon Cloud address).</param>
         /// <param name="port">The server's port to connect to.</param>
         /// <param name="appID">Your application ID (Photon Cloud provides you with a GUID for your game).</param>
+        [Obsolete("Replace with ConnectUsingSettings(). In the settings, set UseNameServer to false, set a Server and Port.")]
         public static bool ConnectToMaster(string masterServerAddress, int port, string appID)
         {
             // TODO: refactor NetworkingClient.LoadBalancingPeer.PeerState to not use the peer but LBC.connected or so
@@ -1287,6 +1245,7 @@ namespace Photon.Pun
         /// In general check out the <see cref="DisconnectCause"/> from the <see cref="IConnectionCallbacks.OnDisconnected"/> callback.
         /// </remarks>
         /// <returns>If this client is going to connect to cloud server based on ping. Even if true, this does not guarantee a connection but the attempt is being made.</returns>
+        [Obsolete("Replace with ConnectUsingSettings(). Don't set a Fixed Region in the settings to connect to the region with best ping.")]
         public static bool ConnectToBestCloudServer()
         {
             if (NetworkingClient.LoadBalancingPeer.PeerState != PeerStateValue.Disconnected)
@@ -1324,6 +1283,7 @@ namespace Photon.Pun
         ///
         /// Once connected, check the value of CurrentCluster.
         /// </remarks>
+        [Obsolete("Replace with ConnectUsingSettings() and set a FixedRegion in the settings.")]
         public static bool ConnectToRegion(string region)
         {
             if (NetworkingClient.LoadBalancingPeer.PeerState != PeerStateValue.Disconnected && NetworkingClient.Server != ServerConnection.NameServer)
@@ -1372,7 +1332,7 @@ namespace Photon.Pun
 
             if (NetworkingClient == null)
             {
-                return; // Surpress error when quitting playmode in the editor
+                return; // Suppress error when quitting playmode in the editor
             }
 
             NetworkingClient.Disconnect();
@@ -1617,7 +1577,7 @@ namespace Photon.Pun
         /// <param name="expectedCustomRoomProperties">Filters for rooms that match these custom properties (string keys and values). To ignore, pass null.</param>
         /// <param name="expectedMaxPlayers">Filters for a particular maxplayer setting. Use 0 to accept any maxPlayer value.</param>
         /// <returns>If the operation got queued and will be sent.</returns>
-        public static bool JoinRandomRoom(Hashtable expectedCustomRoomProperties, byte expectedMaxPlayers)
+        public static bool JoinRandomRoom(Hashtable expectedCustomRoomProperties, int expectedMaxPlayers)
         {
             return JoinRandomRoom(expectedCustomRoomProperties, expectedMaxPlayers, MatchmakingMode.FillRoom, null, null);
         }
@@ -1646,7 +1606,7 @@ namespace Photon.Pun
         /// <param name="sqlLobbyFilter">A filter-string for SQL-typed lobbies.</param>
         /// <param name="expectedUsers">Optional list of users (by UserId) who are expected to join this game and who you want to block a slot for.</param>
         /// <returns>If the operation got queued and will be sent.</returns>
-        public static bool JoinRandomRoom(Hashtable expectedCustomRoomProperties, byte expectedMaxPlayers, MatchmakingMode matchingType, TypedLobby typedLobby, string sqlLobbyFilter, string[] expectedUsers = null)
+        public static bool JoinRandomRoom(Hashtable expectedCustomRoomProperties, int expectedMaxPlayers, MatchmakingMode matchingType, TypedLobby typedLobby, string sqlLobbyFilter, string[] expectedUsers = null)
         {
             if (OfflineMode)
             {
@@ -2055,7 +2015,7 @@ namespace Photon.Pun
         private static void EnterOfflineRoom(string roomName, RoomOptions roomOptions, bool createdRoom)
         {
             offlineModeRoom = new Room(roomName, roomOptions, true);
-            NetworkingClient.ChangeLocalID(1);
+            NetworkingClient.ChangeLocalID(1, true);
             offlineModeRoom.masterClientId = 1;
             offlineModeRoom.AddPlayer(PhotonNetwork.LocalPlayer);
             offlineModeRoom.LoadBalancingClient = PhotonNetwork.NetworkingClient;
@@ -2200,7 +2160,7 @@ namespace Photon.Pun
         ///
         /// When done, OnRoomListUpdate gets called.
         /// </remarks>
-        /// <see cref="https://doc.photonengine.com/en-us/pun/v2/lobby-and-matchmaking/matchmaking-and-lobby/#sql_lobby_type"/>
+        /// <see href="https://doc.photonengine.com/en-us/pun/v2/lobby-and-matchmaking/matchmaking-and-lobby/#sql_lobby_type"/>
         /// <param name="typedLobby">The lobby to query. Has to be of type SqlLobby.</param>
         /// <param name="sqlLobbyFilter">The sql query statement.</param>
         /// <returns>If the operation could be sent (has to be connected).</returns>
@@ -2977,24 +2937,23 @@ namespace Photon.Pun
         }
 
 
-        /// <summary>Finds the GameObjects with Components of a specific type (using FindObjectsOfType).</summary>
-        /// <param name="type">Type must be a Component</param>
-        /// <returns>HashSet with GameObjects that have a specific type of Component.</returns>
-        public static HashSet<GameObject> FindGameObjectsWithComponent(Type type)
-        {
-            HashSet<GameObject> objectsWithComponent = new HashSet<GameObject>();
+        ///// <summary>Finds the GameObjects with Components of a specific type (using FindObjectsOfType).</summary>
+        ///// <param name="type">Type must be a Component</param>
+        ///// <returns>HashSet with GameObjects that have a specific type of Component.</returns>
+        //public static HashSet<GameObject> FindGameObjectsWithComponent(Type type)
+        //{
+        //    HashSet<GameObject> objectsWithComponent = new HashSet<GameObject>();
+        //    Component[] targetComponents = (Component[])GameObject.FindObjectsOfType(type);
+        //    for (int index = 0; index < targetComponents.Length; index++)
+        //    {
+        //        if (targetComponents[index] != null)
+        //        {
+        //            objectsWithComponent.Add(targetComponents[index].gameObject);
+        //        }
+        //    }
 
-            Component[] targetComponents = (Component[]) GameObject.FindObjectsOfType(type);
-            for (int index = 0; index < targetComponents.Length; index++)
-            {
-                if (targetComponents[index] != null)
-                {
-                    objectsWithComponent.Add(targetComponents[index].gameObject);
-                }
-            }
-
-            return objectsWithComponent;
-        }
+        //    return objectsWithComponent;
+        //}
 
 
         /// <summary>Enable/disable receiving events from a given Interest Group.</summary>
@@ -3117,7 +3076,7 @@ namespace Photon.Pun
         /// </summary>
         /// <remarks>
         /// This is a server-side feature which must be setup in the Photon Cloud Dashboard prior to use.
-        /// <see cref="https://doc.photonengine.com/en-us/pun/v2/gameplay/web-extensions/webrpc"/>
+        /// <see href="https://doc.photonengine.com/en-us/pun/v2/gameplay/web-extensions/webrpc"/>
         /// The Parameters will be converted into JSon format, so make sure your parameters are compatible.
         ///
         /// See <see cref="Photon.Realtime.IWebRpcCallback.OnWebRpcResponse"/> on how to get a response.
@@ -3201,11 +3160,12 @@ namespace Photon.Pun
             }
 
 
-            // in the editor, store the settings file as it's not loaded
-            #if  UNITY_EDITOR
-            // don't save the settings before OnProjectUpdated got called (this hints at an ongoing import/load)
-            if (!PhotonEditorUtils.ProjectChangedWasCalled)
+            #if UNITY_EDITOR
+            // in the editor, store the settings file as it could not be loaded
+            // unless Unity still imports assets
+            if (UnityEditor.EditorApplication.isUpdating)
             {
+                EditorApplication.delayCall += delegate { LoadOrCreateSettings(true); };
                 return;
             }
 
@@ -3282,29 +3242,29 @@ namespace Photon.Pun
         }
 
 
-        /// <summary>
-        /// Internally used by Editor scripts, called on Hierarchy change (includes scene save) to remove surplus hidden PhotonHandlers.
-        /// </summary>
-        /// <remarks>This is done in this class, because the Editor assembly can't access PhotonHandler.</remarks>
-        public static void InternalCleanPhotonMonoFromSceneIfStuck()
-        {
-            PhotonHandler[] photonHandlers = GameObject.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
-            if (photonHandlers != null && photonHandlers.Length > 0)
-            {
-                Debug.Log("Cleaning up hidden PhotonHandler instances in scene. Please save the scene to fix the problem.");
-                foreach (PhotonHandler photonHandler in photonHandlers)
-                {
-                    // Debug.Log("Removing Handler: " + photonHandler + " photonHandler.gameObject: " + photonHandler.gameObject);
-                    if (photonHandler.gameObject != null && photonHandler.gameObject.name == "PhotonMono")
-                    {
-                        photonHandler.gameObject.hideFlags = 0;
-                        GameObject.DestroyImmediate(photonHandler.gameObject);
-                    }
+        ///// <summary>
+        ///// Internally used by Editor scripts, called on Hierarchy change (includes scene save) to remove surplus hidden PhotonHandlers.
+        ///// </summary>
+        ///// <remarks>This is done in this class, because the Editor assembly can't access PhotonHandler.</remarks>
+        //public static void InternalCleanPhotonMonoFromSceneIfStuck()
+        //{
+        //    PhotonHandler[] photonHandlers = GameObject.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
+        //    if (photonHandlers != null && photonHandlers.Length > 0)
+        //    {
+        //        Debug.Log("Cleaning up hidden PhotonHandler instances in scene. Please save the scene to fix the problem.");
+        //        foreach (PhotonHandler photonHandler in photonHandlers)
+        //        {
+        //            // Debug.Log("Removing Handler: " + photonHandler + " photonHandler.gameObject: " + photonHandler.gameObject);
+        //            if (photonHandler.gameObject != null && photonHandler.gameObject.name == "PhotonMono")
+        //            {
+        //                photonHandler.gameObject.hideFlags = 0;
+        //                GameObject.DestroyImmediate(photonHandler.gameObject);
+        //            }
 
-                    Component.DestroyImmediate(photonHandler);
-                }
-            }
-        }
+        //            Component.DestroyImmediate(photonHandler);
+        //        }
+        //    }
+        //}
 
         #endif
 

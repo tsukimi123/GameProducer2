@@ -175,7 +175,7 @@ public class PlayerController2 : MonoBehaviourPunCallbacks, IDamageable
             }
             if (isWaiting == false)
             {
-                playerRigidbody.velocity = new Vector3(horizontalInput * moveSpeed, playerRigidbody.velocity.y, verticalInput * moveSpeed);
+                playerRigidbody.linearVelocity = new Vector3(horizontalInput * moveSpeed, playerRigidbody.linearVelocity.y, verticalInput * moveSpeed);
                 Vector3 movementDirection = new Vector3(horizontalInput * moveSpeed, 0, verticalInput * moveSpeed);
                 if (movementDirection != Vector3.zero)
                 {
@@ -252,8 +252,8 @@ public class PlayerController2 : MonoBehaviourPunCallbacks, IDamageable
             jumpInput += 1;
             if (extraJump > 0 && isGrounded == true) //Jump from the ground
             {
-                playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, 0, playerRigidbody.velocity.z);
-                playerRigidbody.velocity += Vector3.up * jumpForce;
+                playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0, playerRigidbody.linearVelocity.z);
+                playerRigidbody.linearVelocity += Vector3.up * jumpForce;
                 extraJump--;
                 isJump = true;
                 PS.SetActive(true);
@@ -262,8 +262,8 @@ public class PlayerController2 : MonoBehaviourPunCallbacks, IDamageable
             }
             else if (extraJump > 0 || jumpInput >= 1 && extraJump > 0 && isJump == true) //double Jump OR Air Jump
             {
-                playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, 0, playerRigidbody.velocity.z);
-                playerRigidbody.velocity = Vector3.up * jumpForce;
+                playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0, playerRigidbody.linearVelocity.z);
+                playerRigidbody.linearVelocity = Vector3.up * jumpForce;
                 extraJump--;
                 PS.SetActive(true);
                 PlayerAni.SetTrigger("DJump");
@@ -274,12 +274,12 @@ public class PlayerController2 : MonoBehaviourPunCallbacks, IDamageable
                 Vector3 facingDir = body.transform.forward;
                 if (facingDir.x < 0)
                 {
-                    playerRigidbody.velocity = new Vector3(0.7f, 0.9f, 0) * jumpForce;
+                    playerRigidbody.linearVelocity = new Vector3(0.7f, 0.9f, 0) * jumpForce;
                     body.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
                 }
                 else
                 {
-                    playerRigidbody.velocity = new Vector3(-0.7f, 0.9f, 0) * jumpForce;
+                    playerRigidbody.linearVelocity = new Vector3(-0.7f, 0.9f, 0) * jumpForce;
                     body.transform.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
                 }
                 extraJump = -1;
@@ -290,8 +290,8 @@ public class PlayerController2 : MonoBehaviourPunCallbacks, IDamageable
             }
             else if (extraJump == 0 && isGrounded == true) //確保跳躍時一定能跳起來 (正常狀況下不會執行)
             {
-                playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, 0, playerRigidbody.velocity.z);
-                playerRigidbody.velocity += Vector3.up * jumpForce;
+                playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, 0, playerRigidbody.linearVelocity.z);
+                playerRigidbody.linearVelocity += Vector3.up * jumpForce;
                 PS.SetActive(true);
                 PlayerAni.SetTrigger("Jump");
             }
@@ -317,7 +317,7 @@ public class PlayerController2 : MonoBehaviourPunCallbacks, IDamageable
         isDash = true;
         while (Time.time < startTime + dashTime)
         {
-            playerRigidbody.velocity = dashSpeed * body.transform.forward;
+            playerRigidbody.linearVelocity = dashSpeed * body.transform.forward;
             print("dash");
             yield return 0;
         }
@@ -421,5 +421,11 @@ public class PlayerController2 : MonoBehaviourPunCallbacks, IDamageable
         yield return new WaitForSeconds(2.5f);
         PhotonNetwork.Destroy(this.gameObject);
         playerManager2.Die();
+    }
+    private void OnDestroy()
+    {
+        // 只有自己的角色會建立 InputMaster；Boss 戰死亡或切換場景時不會經過 Die() 的 Disable
+        inputMaster?.Disable();
+        inputMaster?.Dispose();
     }
 }

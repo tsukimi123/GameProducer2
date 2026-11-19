@@ -11,7 +11,7 @@ public class MaoMaobullet : MonoBehaviourPun
     public Rigidbody rb;
     void Start()
     {
-        rb.velocity = transform.forward * speed;
+        rb.linearVelocity = transform.forward * speed;
         StartCoroutine(DestroyBullet());
     }
 

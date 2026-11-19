@@ -19,7 +19,7 @@ public class CameraMove : MonoBehaviourPun
             if (other.gameObject.CompareTag("Player"))
             {
                 var cameraController = other.GetComponent<PlayerController>().myCamera.GetComponent<CameraController>();
-                cameraController.cinemachineCameraOffset.m_Offset = artPosition;
+                cameraController.cinemachineCameraOffset.Offset = artPosition;
                 cameraController.secondCamera.SetActive(true);
             }
         }
@@ -28,7 +28,7 @@ public class CameraMove : MonoBehaviourPun
             if (other.gameObject.CompareTag("Player2"))
             {
                 var cameraController = other.GetComponent<PlayerController2>().myCamera.GetComponent<CameraController>();
-                cameraController.cinemachineCameraOffset.m_Offset = programmerPosition;
+                cameraController.cinemachineCameraOffset.Offset = programmerPosition;
                 cameraController.secondCamera.SetActive(true);
             }
         }
@@ -52,7 +52,7 @@ public class CameraMove : MonoBehaviourPun
     private void OnTriggerExit(Collider other)
     {
         PhotonView photonView = other.gameObject.GetComponent<PhotonView>();
-        if (photonView.IsMine == false)
+        if (photonView != null && photonView.IsMine == false)
         {
             return;
         }

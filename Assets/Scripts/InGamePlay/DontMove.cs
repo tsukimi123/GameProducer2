@@ -14,6 +14,6 @@ public class DontMove : MonoBehaviourPun
     }
     void Update()
     {
-        RB.velocity = Vector3.zero;
+        RB.linearVelocity = Vector3.zero;
     }
 }

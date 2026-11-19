@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+
 
 public class CameraController : MonoBehaviour
 {
@@ -10,22 +10,33 @@ public class CameraController : MonoBehaviour
     //public float smoothSpeed = 0.125f;
     //private Vector3 origin;
     public GameObject Target, firstCamera,secondCamera, bossCamera;
-    public CinemachineCameraOffset cinemachineCameraOffset;
-    public CinemachineConfiner cinemachineConfiner, cinemachineConfiner2;
+    public Unity.Cinemachine.CinemachineCameraOffset cinemachineCameraOffset;
+    // Cinemachine 3：舊的 CinemachineConfiner（2D 模式）由 Upgrader 轉換成 CinemachineConfiner2D
+    public Unity.Cinemachine.CinemachineConfiner2D cinemachineConfiner, cinemachineConfiner2;
     public Vector3 bossCameraPosition;
     public bool isBossFight;
     private void Awake()
     {
-        cinemachineCameraOffset = secondCamera.GetComponent<CinemachineCameraOffset>();
-        cinemachineConfiner = GetComponent<CinemachineConfiner>();
-        cinemachineConfiner2 = secondCamera.GetComponent<CinemachineConfiner>();
+        cinemachineCameraOffset = secondCamera.GetComponent<Unity.Cinemachine.CinemachineCameraOffset>();
+        cinemachineConfiner = GetComponent<Unity.Cinemachine.CinemachineConfiner2D>();
+        cinemachineConfiner2 = secondCamera.GetComponent<Unity.Cinemachine.CinemachineConfiner2D>();
         isBossFight = false;
     }
     private void Start()
     {
-        cinemachineConfiner.m_BoundingShape2D = GameObject.Find("Confiner").GetComponent<Collider2D>();
-        cinemachineConfiner2.m_BoundingShape2D = GameObject.Find("Confiner").GetComponent<Collider2D>();
+        var confinerObject = GameObject.Find("Confiner");
+        var shape = confinerObject != null ? confinerObject.GetComponent<Collider2D>() : null;
+        SetBoundingShape(cinemachineConfiner, shape);
+        SetBoundingShape(cinemachineConfiner2, shape);
         bossCamera.transform.position = bossCameraPosition;
+    }
+    private static void SetBoundingShape(Unity.Cinemachine.CinemachineConfiner2D confiner, Collider2D shape)
+    {
+        // 還沒跑 Cinemachine Upgrader 時 prefab 上沒有 Confiner2D，略過而不是丟 NullReferenceException
+        if (confiner == null)
+            return;
+        confiner.BoundingShape2D = shape;
+        confiner.InvalidateBoundingShapeCache();
     }
     /*private void Update()
     {

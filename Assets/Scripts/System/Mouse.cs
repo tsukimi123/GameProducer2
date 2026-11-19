@@ -54,4 +54,10 @@ public class Mouse : MonoBehaviour
             useJoyStick = false;
         }
     }
+    private void OnDestroy()
+    {
+        // 新版 Input System 產生的 InputMaster 在未 Disable 就被回收時會報 Assert
+        inputMaster?.Disable();
+        inputMaster?.Dispose();
+    }
 }
